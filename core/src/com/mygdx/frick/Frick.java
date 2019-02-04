@@ -22,13 +22,15 @@ public class Frick extends ApplicationAdapter implements InputProcessor {
 	
 	@Override
 	public void create () {
-		float w= Gdx.graphics.getWidth();
-		float h= Gdx.graphics.getHeight();
+		//float w= Gdx.graphics.getWidth();
+		//float h= Gdx.graphics.getHeight();
+        float w=256;
+        float h=256;
 
 		camera=new OrthographicCamera();
 		camera.setToOrtho(false,w,h);
 		camera.update();
-		board= new TmxMapLoader().load("maptest.tmx");
+		board=  new TmxMapLoader().load("map.tmx");
 		boardRenderer=new OrthogonalTiledMapRenderer(board);
 		Gdx.input.setInputProcessor(this);
 
