@@ -10,6 +10,7 @@ public class Frick extends ApplicationAdapter {
 	SpriteBatch batch;
 	// Texture img;
 	Board board;
+
 	
 	@Override
 	public void create () {
@@ -25,7 +26,8 @@ public class Frick extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 	//	batch.draw(img, 0, 0);
-		board.draw(batch);
+        Draw.BoardDraw(board,batch);
+       // board.draw(batch);
 		batch.end();
 	}
 	
