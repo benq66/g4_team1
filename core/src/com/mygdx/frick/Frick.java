@@ -7,32 +7,41 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 
 public class Frick extends ApplicationAdapter implements InputProcessor {
-    //Texture img;
+    Texture img;
     TiledMap board;
     OrthographicCamera camera;
     TiledMapRenderer boardRenderer;
-
+    SpriteBatch sb;
+    Texture texture;
+    Sprite sprite;
 
     @Override
     public void create() {
-        //float w= Gdx.graphics.getWidth();
-        //float h= Gdx.graphics.getHeight();
-        float w = 256;
-        float h = 256;
+//        float w= Gdx.graphics.getWidth();
+//        float h= Gdx.graphics.getHeight();
+        float w = 1024 ;
+        float h = 1024;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-        board = new TmxMapLoader().load("map.tmx");
+        board = new TmxMapLoader().load("map1.tmx");
         boardRenderer = new OrthogonalTiledMapRenderer(board);
         Gdx.input.setInputProcessor(this);
+
+        sb= new SpriteBatch();
+
+        texture=new Texture(Gdx.files.internal("static.png"));
+        sprite=new Sprite(texture);
 
 
     }
@@ -45,8 +54,9 @@ public class Frick extends ApplicationAdapter implements InputProcessor {
         camera.update();
         boardRenderer.setView(camera);
         boardRenderer.render();
-
-
+        sb.begin();
+        sprite.draw(sb);
+        sb.end();
     }
 
     @Override
@@ -62,13 +72,13 @@ public class Frick extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean keyUp(int key) {
         if (key== Input.Keys.LEFT)
-            camera.translate(-32, 0);
+            sprite.translate(-32, 0);
         if (key== Input.Keys.RIGHT)
-            camera.translate(32, 0);
+            sprite.translate(32, 0);
         if (key== Input.Keys.UP)
-            camera.translate(0, -32);
+            sprite.translate(0, 32);
         if (key== Input.Keys.DOWN)
-            camera.translate(0, 32);
+            sprite.translate(0, -32);
         if (key== Input.Keys.NUM_1)
             board.getLayers().get(0).setVisible(!board.getLayers().get(0).isVisible());
         if (key== Input.Keys.NUM_2)
@@ -82,8 +92,10 @@ public class Frick extends ApplicationAdapter implements InputProcessor {
     }
 
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
-        return false;
+    public boolean touchDown(int x, int y, int x2, int y2) {
+        Vector3 clickCoordinates = new Vector3(x,y,0);
+
+        return true;
     }
 
     @Override
